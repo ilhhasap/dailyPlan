@@ -6,7 +6,7 @@
                     <img src="./assets/img/global/burger.svg" class="mb-2" alt="">
                 </button>
                 <div class="d-flex flex-column">
-                    <h1 class="fw-bold">What you've done, Ilham!</h1>
+                    <h1 class="fw-bold">1% Everyday, Ilham!</h1>
                 </div>
             </div>
 
@@ -24,6 +24,9 @@
 
     </div>
     <div class="content">
+        <div class="row">
+
+        </div>
 
         <h2 class="content-title mb-3"><img src=" <?= base_url()?>/assets/img/global/ic_notstarted.svg" alt=""
                 class="me-2"><span>Not Started</span></h2>
@@ -33,17 +36,17 @@
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <div class="ms-2 me-auto py-2">
                 <div class="" style="font-weight: 500;"><?= $task['title']?></div>
-                <?php if($task['status'] == "Completed") : $color = "#85C88A"; $text = "text-dark"; endif;?>
-                <?php if($task['status'] == "In progress") : $color = "#FFDB89"; $text = "text-dark"; endif;?>
-                <?php if($task['status'] == "Not started") : $color = "#D6E4E5"; $text = "text-dark"; endif;?>
-                <?php if($task['status'] == "Pending") : $color = "#FF8787"; $text = "text-light"; endif;?>
+                <?php if($task['idStatus'] == 4) : $color = "#85C88A"; $text = "text-dark"; endif;?>
+                <?php if($task['idStatus'] == 3) : $color = "#FFDB89"; $text = "text-dark"; endif;?>
+                <?php if($task['idStatus'] == 2) : $color = "#D6E4E5"; $text = "text-dark"; endif;?>
+                <?php if($task['idStatus'] == 1) : $color = "#FF8787"; $text = "text-light"; endif;?>
                 <span class="badge bg-transparent <?= $text?>"
-                    style="font-weight: 400;background-color: <?= $color;?> !important;"><?= $task['status']?></span>
+                    style="font-weight: 400;background-color: <?= $color;?> !important;"><?= $task['nameStatus']?></span>
                 <!-- <span class="badge rounded-pill bg-primary" ?></span> -->
             </div>
 
             <div class="mx-auto"><?= date('F j, Y', strtotime($task['endTime']))?></div>
-            <div class=""><?= $task['priority']?></div>
+            <div class=""><?= $task['namePriority']?></div>
 
             <a class="btn btn-transparent" data-bs-toggle="modal" data-bs-target="#editData<?= $task['idTask']?>"><img
                     src=" <?= base_url()?>/assets/img/global/ic_edit.svg" alt=""></a>
@@ -72,7 +75,7 @@
         <div class=" modal-content">
             <div class="modal-body">
                 <form action="<?= base_url()?>Task/addTask" method="post">
-                    <input type="hidden" name="status" value="In progress">
+                    <input type="hidden" name="idStatus" value="2">
                     <div class="col-12 mb-3">
                         <label for="exampleInputPassword1" class="form-label">Add Task</label>
                         <input type="text" class="form-control form-control-lg" placeholder="Enter task" name="title">
@@ -80,10 +83,10 @@
                     <div class="row g-3 mb-3">
                         <div class="col">
                             <label for="exampleInputPassword1" class="form-label">Priority</label>
-                            <select class="form-select" name="priority">
-                                <option value="Low" selected>Low</option>
-                                <option value="Medium">Medium</option>
-                                <option value="High">High</option>
+                            <select class="form-select" name="idPriority">
+                                <?php foreach($showAllPriority as $priority) : ?>
+                                <option value="<?= $priority['idPriority']?>"><?= $priority['namePriority']?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -104,13 +107,18 @@
 </div>
 
 <!-- Modal Edit -->
-<?php foreach($showAllTaskByStatus as $task) : ?>
+<?php foreach($showAllTask as $task) : ?>
 <div class="modal fade modal-edit" data-bs-backdrop="static" data-bs-keyboard="false" id="editData<?= $task['idTask']?>"
     tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-header p-2 border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div class="modal-body">
-                <form action="<?= base_url()?>Task/addTask" method="post">
+                <form action="<?= base_url()?>Task/editTask" method="post">
+                    <input type="hidden" class="form-control form-control-lg" placeholder="Enter task" name="idTask"
+                        value="<?= $task['idTask']?>">
                     <div class="col-12 mb-3">
                         <label for="exampleInputPassword1" class="form-label">Edit task</label>
                         <input type="text" class="form-control form-control-lg" placeholder="Enter task" name="title"
@@ -119,26 +127,26 @@
                     <div class="row g-3 mb-3">
                         <div class="col">
                             <label for="exampleInputPassword1" class="form-label">Status</label>
-                            <select class="form-select" aria-label="Default select example" name="status">
-                                <?php foreach($showAllTaskByStatus as $byTask) : ?>
-                                <?php if($task['status'] == $byTask['status']) { ?>
+                            <select class="form-select" aria-label="Default select example" name="idStatus">
+                                <?php foreach($showAllStatus as $byTask) : ?>
+                                <?php if($task['idStatus'] == $byTask['idStatus']) { ?>
                                 <?php $selected = "selected"; } else { $selected = " ";} ?>
 
-                                <option value="<?= $task['status']?>" <?= $selected;?>>
-                                    <?= $byTask['status']?>
+                                <option value="<?= $byTask['idStatus']?>" <?= $selected;?>>
+                                    <?= $byTask['nameStatus']?>
                                 </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="col">
                             <label for="exampleInputPassword1" class="form-label">Priority</label>
-                            <select class="form-select" name="priority">
-                                <?php foreach($showAllTaskByStatus as $byTask) : ?>
-                                <?php if($task['priority'] == $byTask['priority']) { ?>
+                            <select class="form-select" name="idPriority">
+                                <?php foreach($showAllPriority as $byTask) : ?>
+                                <?php if($task['idPriority'] == $byTask['idPriority']) { ?>
                                 <?php $selected = "selected"; } else { $selected = " ";} ?>
 
-                                <option value="<?= $task['priority']?>" <?= $selected;?>>
-                                    <?= $byTask['priority']?>
+                                <option value="<?= $byTask['idPriority']?>" <?= $selected;?>>
+                                    <?= $byTask['namePriority']?>
                                 </option>
                                 <?php endforeach; ?>
 
@@ -152,10 +160,11 @@
                     </div>
             </div>
             <div class="d-grid p-3">
-                <button type="submit" class="btn btn-save btn-transparent mb-2"
+                <a href="<?= base_url()?>Task/deleteTask/<?= $task['idTask']?>"
+                    class="btn btn-cancel btn-transparent mb-2" style="background-color: #FFE5E5;color: #FF8787;">Delete
+                    Task</a>
+                <button type="submit" class="btn btn-save btn-transparent"
                     style="background-color: #6271EB;color: white;">Save</button>
-                <button type="button" class="btn btn-cancel btn-transparent" data-bs-dismiss="modal"
-                    style="background-color: #eeeeee;color: grey;">Cancel</button>
             </div>
             </form>
         </div>

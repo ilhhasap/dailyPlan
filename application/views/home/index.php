@@ -27,7 +27,12 @@
     </div>
     <div class="content">
         <div class="row">
-
+            <?php if($this->session->flashdata('success')) { ?>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php } ?>
             <!-- <div class="col-12 col-md-6 col-lg-4">
                 <div class="statistics-card">
 
@@ -92,8 +97,8 @@
 
         <h2 class="content-title mb-3">What will you do today?</h2>
         <!-- <h5 class="content-desc mb-4">What will you do today?</h5> -->
-        <?php if(!empty($showAllTask)) : ?>
-        <?php foreach ($showAllTask as $task) : ?>
+        <?php if(!empty($showAllTaskToday)) : ?>
+        <?php foreach ($showAllTaskToday as $task) : ?>
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <div class="ms-2 me-auto py-2">
                 <div class="" style="font-weight: 500;"><?= $task['title']?></div>
@@ -175,11 +180,14 @@
 </div>
 
 <!-- Modal Edit -->
-<?php foreach($showAllTask as $task) : ?>
+<?php foreach($showAllTaskToday as $task) : ?>
 <div class="modal fade modal-edit" data-bs-backdrop="static" data-bs-keyboard="false" id="editData<?= $task['idTask']?>"
     tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-header p-2 border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div class="modal-body">
                 <form action="<?= base_url()?>Task/editTask" method="post">
                     <input type="hidden" class="form-control form-control-lg" placeholder="Enter task" name="idTask"
@@ -197,7 +205,7 @@
                                 <?php if($task['idStatus'] == $byTask['idStatus']) { ?>
                                 <?php $selected = "selected"; } else { $selected = " ";} ?>
 
-                                <option value="<?= $task['idStatus']?>" <?= $selected;?>>
+                                <option value="<?= $byTask['idStatus']?>" <?= $selected;?>>
                                     <?= $byTask['nameStatus']?>
                                 </option>
                                 <?php endforeach; ?>
@@ -210,7 +218,7 @@
                                 <?php if($task['idPriority'] == $byTask['idPriority']) { ?>
                                 <?php $selected = "selected"; } else { $selected = " ";} ?>
 
-                                <option value="<?= $task['idPriority']?>" <?= $selected;?>>
+                                <option value="<?= $byTask['idPriority']?>" <?= $selected;?>>
                                     <?= $byTask['namePriority']?>
                                 </option>
                                 <?php endforeach; ?>

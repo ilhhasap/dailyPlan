@@ -1,6 +1,16 @@
 <?php
 
 class Task_model extends CI_model {
+    public function showAllTaskToday() {
+        $this->db->select('*');
+        $this->db->from('tasks');
+        $this->db->join('priority', 'tasks.idPriority = priority.idPriority');
+        $this->db->join('status', 'tasks.idStatus = status.idStatus');
+        $this->db->where('startTime = CURDATE()');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
     public function showAllTask() {
         $this->db->select('*');
         $this->db->from('tasks');
@@ -27,6 +37,8 @@ class Task_model extends CI_model {
         $query = $this->db->get();
         return $query->result_array();
     }
+
+    
     
     public function addTask()
     {
@@ -50,7 +62,7 @@ class Task_model extends CI_model {
         $datas = [
             "idTask" => $data['idTask'],
             "title" => $data['title'],
-            "startTime" => ' ',
+            // "startTime" => ' ',
             "endTime" => $endTime,
             "idPriority" => $data['idPriority'],
             "idStatus" => $data['idStatus'],

@@ -69,28 +69,64 @@ class Task extends CI_Controller {
 		$this->load->view('templates/footer', $data);
 	}
 
+
+	
     public function addTask()
 	{
 		$this->Task_model->addTask();
-		$this->session->set_flashdata('message', ' dihapus!');
+		$this->session->set_flashdata('success');
 
-		redirect(base_url('Home'));
+		$status = $this->input->post('idStatus',true);
+		
+		if ( $status == 1 ) {
+			$status = "pending";
+		} else if ($status == 2) {
+			$status = "notStarted";
+		} else if ($status == 3) {
+			$status = "inProgress";
+		} else {
+			$status = "completed";
+		}
+
+		redirect(base_url('Task/' . $status));
 	}
 	
     public function editTask()
 	{
 		$this->Task_model->editTask($this->input->post());
-		$this->session->set_flashdata('message', ' dihapus!');
+		$status = $this->input->post('idStatus',true);
+		
+		if ( $status == 1 ) {
+			$status = "pending";
+		} else if ($status == 2) {
+			$status = "notStarted";
+		} else if ($status == 3) {
+			$status = "inProgress";
+		} else {
+			$status = "completed";
+		}
 
-		redirect(base_url('Home'));
+		redirect(base_url('Task/' . $status));
 	}
 	
     public function deleteTask($idTask)
 	{
 		$this->Task_model->deleteTask($idTask);
-		$this->session->set_flashdata('message', ' dihapus!');
+		$this->session->set_flashdata('success');
 
-		redirect(base_url('Home'));
+		$status = $this->input->post('idStatus',true);
+		
+		if ( $status == 1 ) {
+			$status = "pending";
+		} else if ($status == 2) {
+			$status = "notStarted";
+		} else if ($status == 3) {
+			$status = "inProgress";
+		} else {
+			$status = "completed";
+		}
+
+		redirect(base_url('Task/' . $status));
 	}
 	
 }
