@@ -56,6 +56,10 @@
         border-color: #EBE9E9;
     }
 
+    .placeholder {
+        border-radius: 40px;
+    }
+
     .modal-add .modal-content {
         border-radius: 24px;
         padding: 20px 14px;
