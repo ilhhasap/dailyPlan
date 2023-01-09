@@ -33,105 +33,60 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <?php } ?>
-            <!-- <div class="col-12 col-md-6 col-lg-4">
-                <div class="statistics-card">
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex flex-column justify-content-between align-items-start">
-                            <h5 class="content-desc">User</h5>
-
-                            <h3 class="statistics-value">180</h3>
-                        </div>
-
-                        <button class="btn-statistics">
-                            <a href="./user.html">
-                                <img src="./assets/img/global/times.svg" alt="">
-                            </a>
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="statistics-card">
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex flex-column justify-content-between align-items-start">
-                            <h5 class="content-desc">Malls</h5>
-
-                            <h3 class="statistics-value">6</h3>
-                        </div>
-
-                        <button class="btn-statistics">
-                            <a href="./mall.html">
-                                <img src="./assets/img/global/times.svg" alt="">
-                            </a>
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="statistics-card">
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex flex-column justify-content-between align-items-start">
-                            <h5 class="content-desc">Brands</h5>
-
-                            <h3 class="statistics-value">299</h3>
-                        </div>
-
-                        <button class="btn-statistics">
-                            <a href="./brand.html">
-                                <img src="./assets/img/global/times.svg" alt="">
-                            </a>
-                        </button>
-                    </div>
-
-                </div>
-            </div> -->
-
         </div>
 
-        <h2 class="content-title mb-3">What will you do today?</h2>
-        <!-- <h5 class="content-desc mb-4">What will you do today?</h5> -->
-        <?php if(!empty($showAllTaskToday)) : ?>
-        <?php foreach ($showAllTaskToday as $task) : ?>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <div class="ms-2 me-auto py-2">
-                <div class="" style="font-weight: 500;"><?= $task['title']?></div>
-                <?php if($task['idStatus'] == 4) : $color = "#85C88A"; $text = "text-dark"; endif;?>
-                <?php if($task['idStatus'] == 3) : $color = "#FFDB89"; $text = "text-dark"; endif;?>
-                <?php if($task['idStatus'] == 2) : $color = "#D6E4E5"; $text = "text-dark"; endif;?>
-                <?php if($task['idStatus'] == 1) : $color = "#FF8787"; $text = "text-light"; endif;?>
-                <span class="badge bg-transparent <?= $text?>"
-                    style="font-weight: 400;background-color: <?= $color;?> !important;"><?= $task['nameStatus']?></span>
-                <!-- <span class="badge rounded-pill bg-primary" ?></span> -->
-            </div>
+        <div class="row">
+            <h2 class="content-title mb-3">What will you do today?</h2>
+            <!-- <h5 class="content-desc mb-4">What will you do today?</h5> -->
+            <?php if(!empty($showAllTaskToday)) : ?>
+            <?php foreach ($showAllTaskToday as $task) : ?>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div class="ms-2 me-auto py-2">
+                    <div class="" style="font-weight: 500;"><?= $task['title']?></div>
+                    <?php if($task['idStatus'] == 4) : $color = "#85C88A"; $text = "text-dark"; endif;?>
+                    <?php if($task['idStatus'] == 3) : $color = "#FFDB89"; $text = "text-dark"; endif;?>
+                    <?php if($task['idStatus'] == 2) : $color = "#D6E4E5"; $text = "text-dark"; endif;?>
+                    <?php if($task['idStatus'] == 1) : $color = "#FF8787"; $text = "text-light"; endif;?>
+                    <span class="badge bg-transparent <?= $text?>"
+                        style="font-weight: 400;background-color: <?= $color;?> !important;"><?= $task['nameStatus']?></span>
+                    <!-- <span class="badge rounded-pill bg-primary" ?></span> -->
+                </div>
 
-            <div class="mx-auto"><?= date('F j, Y', strtotime($task['endTime']))?></div>
-            <div class=""><?= $task['namePriority']?></div>
+                <div class="mx-auto"><?= date('F j, Y', strtotime($task['endTime']))?></div>
+                <div class=""><?= $task['namePriority']?></div>
 
-            <a class="btn btn-transparent" data-bs-toggle="modal" data-bs-target="#editData<?= $task['idTask']?>"><img
-                    src=" <?= base_url()?>/assets/img/global/ic_edit.svg" alt=""></a>
-        </li>
-        <?php endforeach;?>
-        <?php else : ?>
-        <li class="list-group-item d-flex justify-content-between align-items-center placeholder-glow">
-            <div class="me-auto py-2 placeholder col-4"></div>
+                <a class="btn btn-transparent" data-bs-toggle="modal"
+                    data-bs-target="#editData<?= $task['idTask']?>"><img
+                        src=" <?= base_url()?>/assets/img/global/ic_edit.svg" alt=""></a>
+            </li>
+            <?php endforeach;?>
+            <?php else : ?>
+            <li class="list-group-item d-flex justify-content-between align-items-center placeholder-glow">
+                <div class="me-auto py-2 placeholder col-4"></div>
 
-            <div class="mx-auto placeholder col-2">test</div>
-            <div class="placeholder col-2">test</div>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center placeholder-glow">
-            <div class="me-auto py-2 placeholder col-4"></div>
+                <div class="mx-auto placeholder col-2">test</div>
+                <div class="placeholder col-2">test</div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center placeholder-glow">
+                <div class="me-auto py-2 placeholder col-4"></div>
 
-            <div class="mx-auto placeholder col-2">test</div>
-            <div class="placeholder col-2">test</div>
-        </li>
-        <?php endif; ?>
+                <div class="mx-auto placeholder col-2">test</div>
+                <div class="placeholder col-2">test</div>
+            </li>
+            <?php endif; ?>
+        </div>
+
+        <div class="row">
+            <footer class="sticky-footer bg-light mt-5">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Ilham Tristadika 2022</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+
     </div>
 </div>
 
@@ -245,6 +200,7 @@
 </div>
 </div>
 <?php endforeach; ?>
+
 
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
