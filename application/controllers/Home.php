@@ -18,9 +18,9 @@ class Home extends CI_Controller {
 		$data['showAllTaskToday'] = $this->Task_model->showAllTaskToday();
 		$data['showAllTask'] = $this->Task_model->showAllTask();
 		
-		$this->load->view('templates/header', $data);
+		$this->load->view('templates/header', $data);$this->load->view('templates/footer', $data);
 		$this->load->view('home/index', $data);
-		$this->load->view('templates/footer', $data);
+		
 	}
 	
 }
